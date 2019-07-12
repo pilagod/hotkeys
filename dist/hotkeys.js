@@ -16,9 +16,9 @@
 
   var isff = typeof navigator !== 'undefined' ? navigator.userAgent.toLowerCase().indexOf('firefox') > 0 : false; // 绑定事件
 
-  function addEvent(object, event, method) {
+  function addEvent(object, event, method, useCapture) {
     if (object.addEventListener) {
-      object.addEventListener(event, method, false);
+      object.addEventListener(event, method, useCapture);
     } else if (object.attachEvent) {
       object.attachEvent("on".concat(event), function () {
         method(window.event);
@@ -388,7 +388,8 @@
 
     var i = 0;
     var keyup = false;
-    var keydown = true; // 对为设定范围的判断
+    var keydown = true;
+    var useCapture = false; // 对为设定范围的判断
 
     if (method === undefined && typeof option === 'function') {
       method = option;
@@ -402,6 +403,8 @@
       if (option.keyup) keyup = option.keyup; // eslint-disable-line
 
       if (option.keydown) keydown = option.keydown; // eslint-disable-line
+
+      if (option.useCapture) useCapture = option.useCapture; // eslint-disable-line
     }
 
     if (typeof option === 'string') scope = option; // 对于每个快捷键进行处理
@@ -435,14 +438,14 @@
       elementHasBindEvent.push(element);
       addEvent(element, 'keydown', function (e) {
         dispatch(e);
-      });
+      }, useCapture);
       addEvent(window, 'focus', function () {
         _downKeys = [];
-      });
+      }, useCapture);
       addEvent(element, 'keyup', function (e) {
         dispatch(e);
         clearModifier(e);
-      });
+      }, useCapture);
     }
   }
 

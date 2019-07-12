@@ -20,9 +20,11 @@ export interface FilterEvent {
 }
 
 type Options = {
-  scope: string,
-  element?: HTMLElement | null,
-  keyup?: boolean | null
+  element?: HTMLElement,
+  keydown?: boolean,
+  keyup?: boolean,
+  scope?: string,
+  useCapture?: boolean,
 }
 
 interface Hotkeys {

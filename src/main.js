@@ -257,6 +257,7 @@ function hotkeys(key, option, method) {
   let i = 0;
   let keyup = false;
   let keydown = true;
+  let useCapture = false;
 
   // 对为设定范围的判断
   if (method === undefined && typeof option === 'function') {
@@ -268,6 +269,7 @@ function hotkeys(key, option, method) {
     if (option.element) element = option.element; // eslint-disable-line
     if (option.keyup) keyup = option.keyup; // eslint-disable-line
     if (option.keydown) keydown = option.keydown; // eslint-disable-line
+    if (option.useCapture) useCapture = option.useCapture // eslint-disable-line
   }
 
   if (typeof option === 'string') scope = option;
@@ -301,14 +303,14 @@ function hotkeys(key, option, method) {
     elementHasBindEvent.push(element);
     addEvent(element, 'keydown', (e) => {
       dispatch(e);
-    });
+    }, useCapture);
     addEvent(window, 'focus', () => {
       _downKeys = [];
-    });
+    }, useCapture);
     addEvent(element, 'keyup', (e) => {
       dispatch(e);
       clearModifier(e);
-    });
+    }, useCapture);
   }
 }
 
