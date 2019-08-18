@@ -1,7 +1,7 @@
 import { addEvent, getMods, getKeys, compareArray } from './utils';
 import { _keyMap, _modifier, modifierMap, _mods, _handlers } from './var';
 
-let _downKeys = []; // 记录摁下的绑定键
+const _downKeys = []; // 记录摁下的绑定键
 
 let _scope = 'all'; // 默认热键范围
 const elementHasBindEvent = []; // 已绑定事件的节点记录
@@ -303,9 +303,6 @@ function hotkeys(key, option, method) {
     elementHasBindEvent.push(element);
     addEvent(element, 'keydown', (e) => {
       dispatch(e);
-    }, useCapture);
-    addEvent(window, 'focus', () => {
-      _downKeys = [];
     }, useCapture);
     addEvent(element, 'keyup', (e) => {
       dispatch(e);

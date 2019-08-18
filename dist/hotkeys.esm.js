@@ -433,9 +433,6 @@ function hotkeys(key, option, method) {
     addEvent(element, 'keydown', function (e) {
       dispatch(e);
     }, useCapture);
-    addEvent(window, 'focus', function () {
-      _downKeys = [];
-    }, useCapture);
     addEvent(element, 'keyup', function (e) {
       dispatch(e);
       clearModifier(e);
